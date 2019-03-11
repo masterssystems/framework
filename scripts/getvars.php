@@ -9,8 +9,17 @@
     # Eintrag zerlegen #
     $vteile = explode( ',', $variable );
     # HTML-Tags entfernen, Sonderzeichen umwandeln, Befehlszeichen escapen #
-    if( isset( $vteile[1] ) ) $get[$vteile[0]] = addslashes( strip_tags( urldecode( $vteile[1] ) ) );
-    else $get[$vteile[0]] = true;
+    $vteile[0] = urldecode( $vteile[0] );
+    
+    if( isset( $vteile[1] ) ) {
+    	# split variable name into name and array key
+    	preg_match( '/(.*)\[(.*)\]/', $vteile[0], $variable );
+    	# set array variable
+    	if( isset( $variable[2] ) ) $get[$variable[1]][$variable[2]] = addslashes( strip_tags( urldecode( $vteile[1] ) ) );
+    	# set regular variable
+    	else $get[$vteile[0]] = addslashes( strip_tags( urldecode( $vteile[1] ) ) );
+    	
+    } else $get[$vteile[0]] = true;
   }
 ## GET-Variablen einlesen ##
   # Eintrag gefunden? #
@@ -21,19 +30,26 @@
   }
 ## POST-Variablen einlesen ##
   # Eintrag gefunden? #
-  foreach( $_POST as $variable => $key ) {
+  foreach( $_POST as $key1 => $variable1 ) {
     # Eintrag ist Array? #
-    if( is_array( $key ) ) {
+    if( is_array( $variable1 ) ) {
       # Eintrag gefunden? #
-      foreach( $key as $index => $subkey ) {
-        # HTML-Tags entfernen, Sonderzeichen umwandeln, Befehlszeichen escapen #
-        $get[$variable][$index] = addslashes( strip_tags( $subkey ) );
-        unset( $$variable );
+      foreach( $variable1 as $key2 => $variable2 ) {
+				# Eintrag ist Array? #
+				if( is_array( $variable2 ) ) {
+					# Eintrag gefunden? #
+					foreach( $variable2 as $key3 => $variable3 ) {
+						# HTML-Tags entfernen, Sonderzeichen umwandeln, Befehlszeichen escapen #
+						$get[$key1][$key2][$key3] = addslashes( strip_tags( $variable3 ) );
+					}
+				} else {
+					# HTML-Tags entfernen, Sonderzeichen umwandeln, Befehlszeichen escapen #
+					$get[$key1][$key2] = addslashes( strip_tags( $variable2 ) );
+				}
       }
     } else {
       # HTML-Tags entfernen, Sonderzeichen umwandeln, Befehlszeichen escapen #
-      $get[$variable] = addslashes( strip_tags( $key ) );
-      unset( $$variable );
+      $get[$key1] = addslashes( strip_tags( $variable1 ) );
     }
   }
 
@@ -84,4 +100,4 @@
   unset( $variable );
   unset( $vteile );
   unset( $key );
-?>
+  

@@ -26,7 +26,30 @@
         break;
     }
     return( strtotime( $year.'-'.$month.'-'.$day ) );
-  }
+  } # function quarter_end
+
+	function quarter( $date = false, $offset = 0 ) {
+		
+		if( !$date ) $date = time();
+		
+		# get month of given date
+		$month = idate( 'm', $date );
+		# calculate quarter
+		$quarter = ceil( $month / 3 );
+		
+		if( $offset != 0 ) {
+			# make sure offset is only 1 - 3
+			$offset %= 4;
+			# apply offset
+			$quarter += $offset;
+			# deal with negative results
+			$quarter += 4;
+			# deal with results > 4
+			$quarter %= 4;
+		}
+	
+		return( $quarter );
+	} # function quarter
 
   function interval_end( $date = false, $interval = 'm', $ref = false ) {
     # Ursprungsdatum

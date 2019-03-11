@@ -45,4 +45,23 @@
       )
     );
   }
-?>
+
+	function isodate( $date ) {
+		$date = date( 'Y-m-d', strtotime( $date ) );
+		# prevent fake date
+		if( $date == '1970-01-01' ) return( null );
+		else return( $date );
+	}
+
+	function year( $date ) {
+		$date = date( 'Y', strtotime( $date ) );
+		# prevent fake date
+		if( $date == '1970' ) return( null );
+		else return( $date );
+	}
+
+	function tofloat( $float ) {
+		if( preg_match( '/^-?(?:\d+|\d*,\d+)$/', $float ) ) return( ( str_replace( ',', '.', $float ) ) );
+		else return( $float );
+	}
+	
