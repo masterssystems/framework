@@ -1,4 +1,25 @@
 <?php
+	function select_country( $country ) {
+		$countries = array(
+				'de' => 'Deutschland',
+				'fr' => 'Frankreich',
+				'it' => 'Italien',
+				'at' => 'Österreich',
+				'ch' => 'Schweiz'
+			);
+		
+		$r = '<select name="country" size="1">';
+		foreach( $countries as $value => $name ) {
+			if( $value == $country ) $selected = 'selected="selected"';
+			else $selected = '';
+			
+			$r .= '<option value="'.$value.'" '.$selected.'>'.$name.'</option>';
+		} # foreach country
+		$r .= '</select>';
+		
+		return( $r );
+	} # function select_country
+
   function val_anrede( $anrede ) {
     if( stristr( $anrede, 'frau' ) ) $anrede = 'Frau';
     elseif( stristr( $anrede, 'herr' ) ) $anrede = 'Herr';

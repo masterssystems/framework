@@ -4,18 +4,14 @@
   $session['sid'] = $get['sid'];
   $session['uid'] = $get['uid'];
   
-  # Parameter für Sessionmanagement
-  $gstime = 600;		# 600 Sek. = 5 Minuten - Guest Session Timeout
-  $lstime = 3600;		# 3600 Sek. = 1 Stunde - Logged in Session Timeout
-
 ## Login - falls Daten übermittelt
-  # Login durchführen - nur mit gültiger Gast-Session (jünger als $gstime)
+  # Login durchführen - nur mit gültiger Gast-Session (jünger als FRAMEWORK_SESSIONTIMEOUTANON)
   if( isset( $get['login'] ) && isset( $session['sid'] ) && $session['uid'] == 0 ) {
-    # prüfen ob Session gültig / nicht älter als $gstime
+    # prüfen ob Session gültig / nicht älter als FRAMEWORK_SESSIONTIMEOUTANON
     $r = sql(' SELECT sid FROM tbsession WHERE 
       uid = "'.$session['uid'].'" AND 
       sid = "'.$session['sid'].'" AND 
-      ( UNIX_TIMESTAMP() - timestamp ) < '.$gstime.' AND
+      ( UNIX_TIMESTAMP() - timestamp ) < '.FRAMEWORK_SESSIONTIMEOUTANON.' AND
       browser = "'.substr( $request['browser'], 0, 99 ).'" AND
       ip = "'.$request['ip'].'";' );
     # Session gefunden, Login prüfen
@@ -59,7 +55,7 @@
   $r = sql(' SELECT * FROM tbsession WHERE 
     uid = "'.$session['uid'].'" AND 
     sid = "'.$session['sid'].'" AND 
-    ( UNIX_TIMESTAMP() - timestamp ) < '.$lstime.' AND
+    ( UNIX_TIMESTAMP() - timestamp ) < '.FRAMEWORK_SESSIONTIMEOUTUSER.' AND
     browser = "'.substr( $request['browser'], 0, 99 ).'" AND
     ip = "'.$request['ip'].'";' );
   if( $session = mysqli_fetch_assoc( $r ) ) {
@@ -120,6 +116,6 @@
   $session['link'] = 'sid,'.$session['sid'].'/uid,'.$session['uid'];
 
 ## alte Sessions löschen
-  sql( 'DELETE FROM tbsession WHERE ( UNIX_TIMESTAMP() - timestamp > '.$gstime.' ) AND uid = 0;' );
-  sql( 'DELETE FROM tbsession WHERE ( UNIX_TIMESTAMP() - timestamp > '.$lstime.' ) AND uid > 0;' );
-?>
+  sql( 'DELETE FROM tbsession WHERE ( UNIX_TIMESTAMP() - timestamp > '.FRAMEWORK_SESSIONTIMEOUTANON.' ) AND uid = 0;' );
+  sql( 'DELETE FROM tbsession WHERE ( UNIX_TIMESTAMP() - timestamp > '.FRAMEWORK_SESSIONTIMEOUTUSER.' ) AND uid > 0;' );
+  

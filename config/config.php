@@ -1,12 +1,15 @@
-<?
+<?php
   define( 'FRAMEWORK_DBI', false );
-  define( 'FRAMEWORK_SQLHOST', ':/var/run/mysqld/mysqld.sock' );
+  define( 'FRAMEWORK_SQLHOST', 'localhost' );
   define( 'FRAMEWORK_SQLUSER', '' );
   define( 'FRAMEWORK_SQLDB', '' );
   define( 'FRAMEWORK_SQLPW', '' );
   define( 'FRAMEWORK_SESSIONMGR', false );
+  define( 'FRAMEWORK_SESSIONTIMEOUTANON', 300 );
+  define( 'FRAMEWORK_SESSIONTIMEOUTUSER', 3600 );
+  define( 'FRAMEWORK_AUTHMETHOD', 'auth_mysql_pwauth' );
   define( 'FRAMEWORK_FORCELOGIN', 'Login' );
-  define( 'FRAMEWORK_MULTILANG', true );
+  define( 'FRAMEWORK_MULTILANG', false );
   define( 'FRAMEWORK_DEFAULTLANG', 'en' );
   define( 'FRAMEWORK_TITLE', '' );
   define( 'FRAMEWORK_AUTHOR', '' );
@@ -19,6 +22,9 @@
   define( 'FRAMEWORK_ROBOTS', 'index,follow' );
   define( 'FRAMEWORK_REVISIT', '5 days' );
   define( 'FRAMEWORK_CACHE', 'no-cache' );
-  define( 'FRAMEWORK_TOP', 'Home' );
-  define( 'FRAMEWORK_COPYRIGHT', 'Imprint' );
-?>
+  define( 'FRAMEWORK_TOP_LINK', 'Home' );
+  define( 'FRAMEWORK_COPYRIGHT_LINK', 'Imprint' );
+  define( 'FRAMEWORK_ROOT', '/' );
+#  define( 'FRAMEWORK_DEBUG', 0 );
+  define( 'FRAMEWORK_DEBUG', E_ALL );
+  define( 'FRAMEWORK_PWAUTH', '/bin/pwauth' );

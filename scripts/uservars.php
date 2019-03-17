@@ -10,7 +10,8 @@
     ## Domain-Name ##
     $request['domain'] = $host[1];
     ## Host-Name ##
-    $request['host'] = $host[2];
+    if( isset( $host[2] ) ) $request['host'] = $host[2];
+    else $request['host'] = '';
   unset( $host );
 ## IP-Adresse abspeichern ##
   $request['ip'] = $_SERVER['REMOTE_ADDR'];
@@ -29,7 +30,8 @@
   unset( $langk );
   unset( $langs );
 ## Referer abspeichern ##
-  $request['referer'] = $_SERVER['HTTP_REFERER'];
+	if( isset( $_SERVER['HTTP_REFERER'] ) ) $request['referer'] = $_SERVER['HTTP_REFERER'];
+	else $request['referer'] = '';
 ## Browser abspeichern ##
   $request['browser'] = $_SERVER['HTTP_USER_AGENT'];
   if( stripos( $request['browser'], 'bot' ) ) $request['robot'] = true;

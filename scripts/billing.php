@@ -187,7 +187,7 @@
       0 => array( '2', '3', '4', '5', '6' ),
       1 => array( '7', '8', '9', '+'  )
      );
-     $blacklist = array( 'cum', 'fuc', 'fuk', 'fik', 'fic', 'shit', 'poo', 'penis', 'vag' );
+     $blacklist = array( 'cum', 'fuc', 'fuk', 'fik', 'fic', 'shit', 'sh1t', 'poo', 'pen', 'p3n', 'vag', 'v4g' );
      # generate string part
      for( $i = 0; $i < $characters; $i++ ) $password .= $letters[$i % 4][array_rand( $letters[$i % 4] )];
      # check blacklist, restart if word is found

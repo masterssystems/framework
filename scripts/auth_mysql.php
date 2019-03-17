@@ -53,5 +53,4 @@
 
 		return( mysqli_fetch_assoc( $r ) );
 	}
-
-?>
+	
